@@ -1,13 +1,16 @@
 :root {
   --footer-header-color: rgb(20, 151, 137);
-  --main-background-color: rgb(0, 65, 95);
+  --hover: rgb(106, 204, 194);
+  --main-background-color: rgb(45, 96, 119);
   --links-color: rgb(255, 255, 255);
+  --ash-grey-rgb: rgb(226, 226, 226);
 }
 * {
   box-sizing: border-box;
 }
 html {
   font-size: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 body {
@@ -17,11 +20,10 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: var(--main-background-color);
   text-transform: capitalize;
 }
-
+/*start of header styling*/
 .header {
   background-color: var(--footer-header-color);
 }
@@ -33,48 +35,104 @@ body {
   align-items: center;
   padding: 1.5rem 2rem;
 }
-.mad-quiz-link {
-  color: var(--links-color);
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 3rem;
-  letter-spacing: 0.5rem;
-}
-.image-link {
+.home-answers {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-decoration:  none;
+  letter-spacing: 0.5rem;
+  text-transform: uppercase;
 }
-.image-link h2 {
-    margin: 0;
-    letter-spacing: 0.5rem;
-    color: var(--links-color);
-    
+.mad-quiz-link {
+  color: var(--links-color);
+  text-decoration: none;
+  font-size: 3rem;
 }
+.answers-link {
+  text-decoration: none;
+  color: var(--links-color);
+  font-size: 1.5rem;
+}
+.image-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 .nav-image {
   width: 15rem;
   height: 12rem;
   object-fit: contain;
 }
-
+/*end of header styling*/
+/*start of main styling*/
 .main {
   flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 20rem;
 }
+.content-section {
+  letter-spacing: 0.3rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--ash-grey);
+  box-shadow: 0rem 0rem 0.7rem 0.7rem rgba(var(--ash-grey-rgb), 0.3);
+}
+.content-headers {
+  color: var(--links-color);
+}
+.btn-control {
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+.btn {
+  border: none;
+  line-height: 2.5;
+  letter-spacing: 0.2rem;
+  padding: 0.5rem 2rem;
+  min-width: 20rem;
+  font-size: 1rem;
+  color: var(--links-color);
+  font-size: 1.4rem;
+  text-shadow: 0.1rem 0.1rem 0.1rem rgb(0, 0, 0);
+  border-radius: 1rem;
+  background-color: var(--footer-header-color);
+  background-image: linear-gradient(
+    to top left,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2) 30%,
+    rgba(0, 0, 0, 0)
+  );
+  box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+    inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+.btn:hover {
+  background-color: var(--hover);
+  cursor: pointer;
+}
+
+.btn-control:active {
+  box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+/*end of header styling*/
+
+/*start of footer styling*/
 .footer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-color: var(--footer-header-color);
-  color: var(--links-color);
   padding: 2rem 0;
 }
-.github-link, .resources-link {
-    text-decoration: none;
-    color: var(--links-color);
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5rem;
+.github-link,
+.resources-link {
+  text-decoration: none;
+  color: var(--links-color);
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
 }
- 
