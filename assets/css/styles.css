@@ -78,7 +78,7 @@ body {
   padding: 2rem 1rem;
   text-align: center;
   color: var(--ash-grey);
-  box-shadow: 0rem 0rem 0.7rem 0.7rem rgba(var(--ash-grey-rgb), 0.3);
+  box-shadow: 2px 2px 2px 2px var(--ash-grey-rgb);
 }
 .content-headers {
   color: var(--links-color);
