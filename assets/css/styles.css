@@ -1,0 +1,80 @@
+:root {
+  --footer-header-color: rgb(20, 151, 137);
+  --main-background-color: rgb(0, 65, 95);
+  --links-color: rgb(255, 255, 255);
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 1.6;
+  line-height: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: var(--main-background-color);
+  text-transform: capitalize;
+}
+
+.header {
+  background-color: var(--footer-header-color);
+}
+
+.nav-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+}
+.mad-quiz-link {
+  color: var(--links-color);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 3rem;
+  letter-spacing: 0.5rem;
+}
+.image-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration:  none;
+}
+.image-link h2 {
+    margin: 0;
+    letter-spacing: 0.5rem;
+    color: var(--links-color);
+    
+}
+.nav-image {
+  width: 15rem;
+  height: 12rem;
+  object-fit: contain;
+}
+
+.main {
+  flex: 2;
+}
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--footer-header-color);
+  color: var(--links-color);
+  padding: 2rem 0;
+}
+.github-link, .resources-link {
+    text-decoration: none;
+    color: var(--links-color);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+}
+ 
