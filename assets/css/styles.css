@@ -136,3 +136,17 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5rem;
 }
+@media only screen and (max-width: 600px){
+    body {
+        line-height: 1.5;
+    }
+    .nav-container {
+        flex-wrap: nowrap;
+    }
+    .home-answers {
+        text-align: center;
+    }
+	.main {
+        margin: 0 0.5rem;
+    }
+}
