@@ -71,7 +71,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 20rem;
+  margin: 0 40rem;
 }
 .content-section {
   letter-spacing: 0.3rem;
