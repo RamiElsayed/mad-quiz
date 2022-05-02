@@ -5,56 +5,61 @@ const bannerElem = document.getElementById("banner-section");
 //target main element
 const mainElem = document.getElementById("main");
 
-
-
 const removeSection = () => {
   bannerElem.remove();
 };
 
-const removeQuestion = () => {
-
-}
+//const removeQuestion = () => {
+// document.getElementById("question-container").remove();
+//}
 ////declare event handler function for section clicks
-const handleSectionClick = (event) => {
-  const currentTarget = event.currentTarget;
-  const choice = event.target;
+// const handleSectionClick = (event) => {
+//   const currentTarget = event.currentTarget;
+//   const choice = event.target;
 
-  if (choice === "LI") {
-    let value = target.getAttribute("data-value");
-    timercalculation(currentTarget, value);
-  }
-  removeQuestion();
-};
+//   if (choice === "LI") {
+//     let value = target.getAttribute("data-value");
+//     timercalculation(currentTarget, value);
+//   }
+//   removeQuestion();
+//};
 //create timer section
-let timeLeft = 30;
-const timercalculation = setInterval((currentTarget, value) => {
-  if (currentTarget === questions[0] && !value === questions[0].choices[3]) {
-    timeLeft -= 3;
-  }
-  if (currentTarget === questions[1] && !value === questions[1].choices[2]) {
-    timeLeft -= 3;
-  }
-  if (currentTarget === questions[2] && !value === questions[1].choices[2]) {
-    timeLeft -= 3;
-  }
-  if (currentTarget === questions[3] && !value === questions[1].choices[2]) {
-    timeLeft -= 3;
-  }
-  timeLeft -= 1;
-}, 1000);
+let timeLeft = 5;
+//const timercalculation = setInterval(() => {
+  // if (currentTarget === questions[0] && !value === questions[0].choices[3]) {
+  //   timeLeft -= 3;
+  // }
+  // else if (currentTarget === questions[1] && !value === questions[1].choices[2]) {
+  //   timeLeft -= 3;
+  // }
+  // else if (currentTarget === questions[2] && !value === questions[1].choices[2]) {
+  //   timeLeft -= 3;
+  // }
+  // else if (currentTarget === questions[3] && !value === questions[1].choices[2]) {
+  //   timeLeft -= 3;
+  // }
+  //timeLeft -= 1;
+//}, 1000);
 const renderTimer = () => {
-  const timer = document.createElement("section");
-  section.setAttribute("class", "timer-section ");
-  section.setAttribute("id", "timer");
+  const timersection = document.createElement("section");
+  timersection.setAttribute("class", "timer-section ");
+  timersection.setAttribute("id", "timer");
 
   const timerDiv = document.createElement("div");
-  section.setAttribute("class", "timer-div");
-  section.setAttribute("id", "timerDiv");
+  timerDiv.setAttribute("class", "timer-div");
+  timerDiv.setAttribute("id", "timerDiv");
 
+  var interval = setInterval(() => {
+    timeLeft--;
+    timerDiv.textContent = `timeleft: ${timeLeft}`;
+    if (timeLeft === 0 ) {
+      clearInterval(interval);
+    }
+  }, 1000);
   timerDiv.textContent = `timeleft: ${timeLeft}`;
 
-  mainElem.append(timer);
-  timer.append(timerDiv);
+  timersection.append(timerDiv);
+  mainElem.append(timersection);
 };
 let questionIndex = 0;
 const questions = [
@@ -95,7 +100,7 @@ const renderQuestion = () => {
   //create h2
   const h2 = document.createElement("h2");
   h2.setAttribute("class", "question-title");
-  h2.textContent = `${questionIndex + 1}. ${currentQuestion.text}`;
+  h2.textContent = `${questionIndex + 1}. ${currentQuestion.question}`;
   //create ul and append lis
   const ul = document.createElement("ul");
   ul.setAttribute("class", "choices-list");
@@ -117,8 +122,8 @@ const renderQuestion = () => {
 
   const li4 = document.createElement("li");
   li4.setAttribute("class", "list-choice");
-  li1.setAttribute("data-value", currentQuestion.choices[3]);
-  li1.textContent = currentQuestion.choices[3];
+  li4.setAttribute("data-value", currentQuestion.choices[3]);
+  li4.textContent = currentQuestion.choices[3];
 
   //append lis to ul
   ul.append(li1, li2, li3, li4);
@@ -129,7 +134,7 @@ const renderQuestion = () => {
   //append section to main
   mainElem.append(section);
 
-  section.addEventListener("click", handleSectionClick);
+  //section.addEventListener("click", handleSectionClick);
 };
 
 const handleStartButtonClick = () => {
