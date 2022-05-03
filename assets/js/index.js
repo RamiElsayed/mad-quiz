@@ -44,6 +44,10 @@ const removeQuestionSection = () => {
   const questionSection = document.getElementById("question-container");
   questionSection.remove();
 };
+const removeForm = () => {
+  const formSection = document.getElementById("score-form");
+  formSection.remove();
+}
 
 const removeTimer = () => {
   const timerSection = document.getElementById("timer");
@@ -62,21 +66,50 @@ const restartPage = () => {
   restartSection.append(restartOption);
   mainElem.append(restartSection);
 };
-const renderForm =(score) => {
+const storeAndShowScore = (event) =>{
+  event.preventDefault();
+  const formTarget = event.target;
+  const name = document.getElementById("form-input");
+  const score = timeLeft;
+   if (formTarget.tagName === "BUTTON" && name.textContent !== "") {
+    removeForm();
+    const scoreSection = document.createElement("section");
+    scoreSection.setAttribute("class", "score-data");
+
+
+   }
+   else {
+     alert("please enter your name");
+     
+   }
+}
+const renderForm = () => {
   const form = document.createElement("form");
   form.setAttribute("class", "form-section");
+  form.setAttribute("id", "score-form")
 
   const inputTitle = document.createElement("h2");
   inputTitle.setAttribute("class", "input-title");
-  inputTitle.textContent = "please enter your name"
+  inputTitle.textContent = "please enter your name";
 
   const input = document.createElement("input");
   input.setAttribute("class", "input-field");
-  input.placeholder("your name");
+  input.setAttribute("id", "form-input");
+  input.placeholder = "your name";
 
+  const submitButton = document.createElement("button");
+  submitButton.setAttribute("class", "form-button");
+  submitButton.setAttribute("id", "submit-button")
+  submitButton.innerHTML = "submit";
   
-  localStorage(score);
-}
+
+  inputTitle.append(input);
+  inputTitle.append(submitButton);
+  form.append(inputTitle);
+  mainElem.append(form);
+
+  form.addEventListener("click", storeAndShowScore)
+};
 var startTimer;
 const renderTimer = () => {
   const timersection = document.createElement("section");
@@ -89,17 +122,17 @@ const renderTimer = () => {
 
   startTimer = setInterval(() => {
     timerDiv.textContent = `timeleft: ${timeLeft}`;
-    if (timeLeft <= 0 ) {
+    if (timeLeft <= 0) {
       clearInterval(startTimer);
       removeQuestionSection();
       removeTimer();
       restartPage();
     }
-  
     timeLeft--;
     if (questionIndex > 3) {
       clearInterval(startTimer);
-      renderForm(timeLeft);
+      removeTimer();
+      renderForm();
     }
   }, 1000);
   timerDiv.textContent = `timeleft: ${timeLeft}`;
@@ -112,12 +145,46 @@ const chosenAnswer = (event) => {
   //target
   var targetAnswer = event.target;
   //validate answer
-  if (targetAnswer.tagName === "LI" && targetAnswer.textContent !== questions[questionIndex].correctanswer && questionIndex < 3) {
-      timeLeft -= 1;
+  if (
+    targetAnswer.tagName === "LI" &&
+    targetAnswer.textContent !== questions[questionIndex].correctanswer &&
+    questionIndex < 3
+  ) {
+    timeLeft -= 1;
+    removeQuestionSection();
+    questionIndex += 1;
+    renderQuestion();
   }
-  removeQuestionSection();
-  questionIndex += 1;
-  renderQuestion();
+  else if (
+    targetAnswer.tagName === "LI" &&
+    targetAnswer.textContent !== questions[questionIndex].correctanswer &&
+    questionIndex === 3
+  ) {
+    timeLeft -= 1;
+    clearInterval(startTimer);
+    removeTimer();
+    removeQuestionSection();
+    renderForm(timeLeft);
+  }
+  else if (
+    targetAnswer.tagName === "LI" &&
+    targetAnswer.textContent === questions[questionIndex].correctanswer &&
+    questionIndex < 3
+  ) {
+    removeQuestionSection();
+    questionIndex += 1;
+    renderQuestion();
+  }
+  else if (
+    targetAnswer.tagName === "LI" &&
+    targetAnswer.textContent === questions[questionIndex].correctanswer &&
+    questionIndex === 3
+  ) {
+    clearInterval(startTimer);
+    removeTimer();
+    removeQuestionSection();
+    renderForm(timeLeft);
+  }
 };
 
 const renderQuestion = () => {
