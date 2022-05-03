@@ -5,41 +5,79 @@ const bannerElem = document.getElementById("banner-section");
 //target main element
 const mainElem = document.getElementById("main");
 
+//question index and questions array
+let questionIndex = 0;
+const questions = [
+  {
+    question:
+      "Who is the only human being to win 2 noble prizes in 2 different science ?",
+    choices: ["albert einstein", "nicola tesla", "Graham Bill", "marie curie"],
+    correctanswer: "marie curie",
+  },
+  {
+    question: "the scientist with the most inventions in recent history ?",
+    choices: ["Thomas Edison", "archimedes", "nicola tesla", "michael faraday"],
+    correctanswer: "nicola tesla",
+  },
+  {
+    question:
+      "who's the first scientist to invent the concept of visual reflection (camera) ?",
+    choices: [
+      "rosalind franklin",
+      "james d watson",
+      "alhazin",
+      "alexander fleming",
+    ],
+    correctanswer: "alhazin",
+  },
+  {
+    question: "who's the scientist to invent the first antibiotic in history",
+    choices: ["carl yung", "carl sagan", "alexander fleming", "carl gauss"],
+    correctanswer: "alexander fleming",
+  },
+];
 const removeSection = () => {
   bannerElem.remove();
 };
 
-//const removeQuestion = () => {
-// document.getElementById("question-container").remove();
-//}
-////declare event handler function for section clicks
-// const handleSectionClick = (event) => {
-//   const currentTarget = event.currentTarget;
-//   const choice = event.target;
+const removeQuestionSection = () => {
+  const questionSection = document.getElementById("question-container");
+  questionSection.remove();
+};
 
-//   if (choice === "LI") {
-//     let value = target.getAttribute("data-value");
-//     timercalculation(currentTarget, value);
-//   }
-//   removeQuestion();
-//};
-//create timer section
-let timeLeft = 5;
-//const timercalculation = setInterval(() => {
-  // if (currentTarget === questions[0] && !value === questions[0].choices[3]) {
-  //   timeLeft -= 3;
-  // }
-  // else if (currentTarget === questions[1] && !value === questions[1].choices[2]) {
-  //   timeLeft -= 3;
-  // }
-  // else if (currentTarget === questions[2] && !value === questions[1].choices[2]) {
-  //   timeLeft -= 3;
-  // }
-  // else if (currentTarget === questions[3] && !value === questions[1].choices[2]) {
-  //   timeLeft -= 3;
-  // }
-  //timeLeft -= 1;
-//}, 1000);
+const removeTimer = () => {
+  const timerSection = document.getElementById("timer");
+  timerSection.remove();
+};
+let timeLeft = 20;
+const restartPage = () => {
+  const restartSection = document.createElement("section");
+  restartSection.setAttribute("class", "restart-page");
+
+  const restartOption = document.createElement("p");
+  restartOption.setAttribute("class", "restart-option");
+  restartOption.textContent =
+    "you ran out of time, Click restart or the mad genuis quiz title to go back to home page";
+
+  restartSection.append(restartOption);
+  mainElem.append(restartSection);
+};
+const renderForm =(score) => {
+  const form = document.createElement("form");
+  form.setAttribute("class", "form-section");
+
+  const inputTitle = document.createElement("h2");
+  inputTitle.setAttribute("class", "input-title");
+  inputTitle.textContent = "please enter your name"
+
+  const input = document.createElement("input");
+  input.setAttribute("class", "input-field");
+  input.placeholder("your name");
+
+  
+  localStorage(score);
+}
+var startTimer;
 const renderTimer = () => {
   const timersection = document.createElement("section");
   timersection.setAttribute("class", "timer-section ");
@@ -49,11 +87,19 @@ const renderTimer = () => {
   timerDiv.setAttribute("class", "timer-div");
   timerDiv.setAttribute("id", "timerDiv");
 
-  var interval = setInterval(() => {
-    timeLeft--;
+  startTimer = setInterval(() => {
     timerDiv.textContent = `timeleft: ${timeLeft}`;
-    if (timeLeft === 0 ) {
-      clearInterval(interval);
+    if (timeLeft <= 0 ) {
+      clearInterval(startTimer);
+      removeQuestionSection();
+      removeTimer();
+      restartPage();
+    }
+  
+    timeLeft--;
+    if (questionIndex > 3) {
+      clearInterval(startTimer);
+      renderForm(timeLeft);
     }
   }, 1000);
   timerDiv.textContent = `timeleft: ${timeLeft}`;
@@ -61,32 +107,19 @@ const renderTimer = () => {
   timersection.append(timerDiv);
   mainElem.append(timersection);
 };
-let questionIndex = 0;
-const questions = [
-  {
-    question:
-      "Who is the only human being to win 2 noble prizes in 2 different science ?",
-    choices: ["albert einstein", "nicola tesla", "Graham Bill", "marie curie"],
-  },
-  {
-    question: "the scientist with the most inventions in recent history ?",
-    choices: ["Thomas Edison", "archimedes", "nicola tesla", "michael faraday"],
-  },
-  {
-    question:
-      "who's the first scientist to invent the concept of visual reflection (camera) ?",
-    choices: [
-      "rosalind franklin",
-      "james d watson",
-      "Alhazin",
-      "alexander fleming",
-    ],
-  },
-  {
-    question: "who's the scientist to invent the first antibiotic in history",
-    choices: ["carl yung", "carl sagan", "alexander fleming", "carl gauss"],
-  },
-];
+
+const chosenAnswer = (event) => {
+  //target
+  var targetAnswer = event.target;
+  //validate answer
+  if (targetAnswer.tagName === "LI" && targetAnswer.textContent !== questions[questionIndex].correctanswer && questionIndex < 3) {
+      timeLeft -= 1;
+  }
+  removeQuestionSection();
+  questionIndex += 1;
+  renderQuestion();
+};
+
 const renderQuestion = () => {
   //get the question
 
@@ -104,29 +137,14 @@ const renderQuestion = () => {
   //create ul and append lis
   const ul = document.createElement("ul");
   ul.setAttribute("class", "choices-list");
-  // create and append lis to ul
-  const li1 = document.createElement("li");
-  li1.setAttribute("class", "list-choice");
-  li1.setAttribute("data-value", currentQuestion.choices[0]);
-  li1.textContent = currentQuestion.choices[0];
 
-  const li2 = document.createElement("li");
-  li2.setAttribute("class", "list-choice");
-  li2.setAttribute("data-value", currentQuestion.choices[1]);
-  li2.textContent = currentQuestion.choices[1];
-
-  const li3 = document.createElement("li");
-  li3.setAttribute("class", "list-choice");
-  li3.setAttribute("data-value", currentQuestion.choices[2]);
-  li3.textContent = currentQuestion.choices[2];
-
-  const li4 = document.createElement("li");
-  li4.setAttribute("class", "list-choice");
-  li4.setAttribute("data-value", currentQuestion.choices[3]);
-  li4.textContent = currentQuestion.choices[3];
-
-  //append lis to ul
-  ul.append(li1, li2, li3, li4);
+  for (let i = 0; i < currentQuestion.choices.length; i++) {
+    const li = document.createElement("li");
+    li.setAttribute("class", "list-choice");
+    li.setAttribute("id", "list-choice");
+    li.textContent = currentQuestion.choices[i];
+    ul.append(li);
+  }
 
   //append ul and h2 to section
   section.append(h2, ul);
@@ -134,7 +152,7 @@ const renderQuestion = () => {
   //append section to main
   mainElem.append(section);
 
-  //section.addEventListener("click", handleSectionClick);
+  section.addEventListener("click", chosenAnswer);
 };
 
 const handleStartButtonClick = () => {
