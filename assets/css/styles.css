@@ -35,7 +35,7 @@ body {
   align-items: center;
   padding: 1.5rem 2rem;
 }
-.home-answers {
+.home-highScores {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +48,7 @@ body {
   text-decoration: none;
   font-size: 3rem;
 }
-.answers-link {
+.highScores-link {
   text-decoration: none;
   color: var(--links-color);
   font-size: 1.5rem;

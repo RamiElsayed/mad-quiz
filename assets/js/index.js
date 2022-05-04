@@ -74,14 +74,7 @@ const finishQuiz = (event) => {
     location.href = "./index.html";
   }
 };
-const storeScore = (scoreCard) => {
-  localStorage.setItem('highscore', JSON.stringify([]));
 
-  var highScores = JSON.parse(localStorage.getItem("highscore"));
-  highScores.push(scoreCard);
-  localStorage.setItem('highscore', JSON.stringify(highScores));
-  
-};
 const showScore = (event) => {
   event.preventDefault();
   const formTarget = event.target;
@@ -105,13 +98,15 @@ const showScore = (event) => {
     const finishQuizButton = document.createElement("button");
     finishQuizButton.setAttribute("class", "finish-quiz-button");
     finishQuizButton.textContent = "Finish";
+    var scoresArray = [];
+    localStorage.setItem("highscores", JSON.stringify(scoresArray));
 
     scoreSection.append(scoreCard);
     scoreSection.append(notification);
     scoreSection.append(finishQuizButton);
     mainElem.append(scoreSection);
 
-    storeScore(scoreCard.textContent);
+    
     scoreCard.addEventListener("click", finishQuiz);
 
   } else if (formTarget.tagName === "BUTTON" && name.textContent === "") {
