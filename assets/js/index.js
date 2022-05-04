@@ -49,7 +49,7 @@ const removeQuestionSection = () => {
 const removeForm = () => {
   const formSection = document.getElementById("score-form");
   formSection.remove();
-}
+};
 
 const removeTimer = () => {
   const timerSection = document.getElementById("timer");
@@ -68,27 +68,45 @@ const restartPage = () => {
   restartSection.append(restartOption);
   mainElem.append(restartSection);
 };
-const storeAndShowScore = (event) =>{
+const storeScore = (scoreCard) => {
+  localStorage.setItem('highscore', JSON.stringify([]));
+
+  var highScores = localStorage.getItem('highscore');
+  highScores.push(scoreCard);
+  
+};
+const showScore = (event) => {
   event.preventDefault();
   const formTarget = event.target;
-  const name = document.getElementById("form-input");
-  const score = timeLeft;
-   if (formTarget.tagName === "BUTTON" && name.textContent !== "") {
+  const name = document.getElementById("form-input").value;
+  if (formTarget.tagName === "BUTTON" && name !== "") {
     removeForm();
 
     const scoreSection = document.createElement("section");
     scoreSection.setAttribute("class", "score-data");
 
-   }
-   else {
-     alert("please enter your name");
-     
-   }
-}
+    const scoreCard = document.createElement("h1");
+    scoreCard.setAttribute("class", "score-card");
+    scoreCard.textContent = `${name}'s score: ${timeLeft}`;
+
+
+    const notification = document.createElement("h4");
+    notification.setAttribute("class", "notification");
+    notification.textContent =
+      "you can see the high scores by clicking on the high score link on the top left of this page";
+
+    scoreCard.append(notification);
+    scoreSection.append(scoreCard);
+    mainElem.append(scoreSection);
+    storeScore(scoreCard);
+  } else if (formTarget.tagName === "BUTTON" && name.textContent === "") {
+    alert("please enter your name");
+  }
+};
 const renderForm = () => {
   const form = document.createElement("form");
   form.setAttribute("class", "form-section");
-  form.setAttribute("id", "score-form")
+  form.setAttribute("id", "score-form");
 
   const inputTitle = document.createElement("h2");
   inputTitle.setAttribute("class", "input-title");
@@ -101,16 +119,15 @@ const renderForm = () => {
 
   const submitButton = document.createElement("button");
   submitButton.setAttribute("class", "form-button");
-  submitButton.setAttribute("id", "submit-button")
+  submitButton.setAttribute("id", "submit-button");
   submitButton.innerHTML = "submit";
-  
-  
+
   inputTitle.append(input);
   inputTitle.append(submitButton);
   form.append(inputTitle);
   mainElem.append(form);
 
-  form.addEventListener("click", storeAndShowScore)
+  form.addEventListener("click", showScore);
 };
 
 var startTimer;
@@ -144,48 +161,26 @@ const renderTimer = () => {
   mainElem.append(timersection);
 };
 
-const chosenAnswer = (event) => {
-  //target
-  var targetAnswer = event.target;
-  //validate answer
-  if (
-    targetAnswer.tagName === "LI" &&
-    targetAnswer.textContent !== questions[questionIndex].correctanswer &&
-    questionIndex < 3
-  ) {
-    timeLeft -= 1;
-    removeQuestionSection();
+const isCorrectAnswer = (answer, questionIndex) => {
+  return answer === questions[questionIndex].correctanswer;
+};
+
+const onAnswerSectionClick = (event) => {
+  if (event.target.tagName !== "LI") return;
+  removeQuestionSection();
+
+  if (isCorrectAnswer(event.target.textContent, questionIndex)) {
+    timeLeft += 2;
+  } else {
+    timeLeft -= 3;
+  }
+
+  if (questionIndex < 3) {
     questionIndex += 1;
     renderQuestion();
-  }
-  else if (
-    targetAnswer.tagName === "LI" &&
-    targetAnswer.textContent !== questions[questionIndex].correctanswer &&
-    questionIndex === 3
-  ) {
-    timeLeft -= 1;
+  } else {
     clearInterval(startTimer);
     removeTimer();
-    removeQuestionSection();
-    renderForm();
-  }
-  else if (
-    targetAnswer.tagName === "LI" &&
-    targetAnswer.textContent === questions[questionIndex].correctanswer &&
-    questionIndex < 3
-  ) {
-    removeQuestionSection();
-    questionIndex += 1;
-    renderQuestion();
-  }
-  else if (
-    targetAnswer.tagName === "LI" &&
-    targetAnswer.textContent === questions[questionIndex].correctanswer &&
-    questionIndex === 3
-  ) {
-    clearInterval(startTimer);
-    removeTimer();
-    removeQuestionSection();
     renderForm();
   }
 };
@@ -222,17 +217,16 @@ const renderQuestion = () => {
   //append section to main
   mainElem.append(section);
 
-  section.addEventListener("click", chosenAnswer);
+  section.addEventListener("click", onAnswerSectionClick);
 };
 
-const handleStartButtonClick = () => {
-  //remove section
+const startQuiz = () => {
   removeSection();
-  //render timer
+
   renderTimer();
-  //render question
+
   renderQuestion();
 };
 
 //add event listener to start button
-startButton.addEventListener("click", handleStartButtonClick);
+startButton.addEventListener("click", startQuiz);
