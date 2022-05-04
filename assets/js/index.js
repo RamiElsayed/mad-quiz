@@ -4,6 +4,8 @@ const startButton = document.getElementById("start-btn");
 const bannerElem = document.getElementById("banner-section");
 //target main element
 const mainElem = document.getElementById("main");
+//time left variable to store time and use as score
+let timeLeft = 20;
 
 //question index and questions array
 let questionIndex = 0;
@@ -53,7 +55,7 @@ const removeTimer = () => {
   const timerSection = document.getElementById("timer");
   timerSection.remove();
 };
-let timeLeft = 20;
+
 const restartPage = () => {
   const restartSection = document.createElement("section");
   restartSection.setAttribute("class", "restart-page");
@@ -73,9 +75,9 @@ const storeAndShowScore = (event) =>{
   const score = timeLeft;
    if (formTarget.tagName === "BUTTON" && name.textContent !== "") {
     removeForm();
+
     const scoreSection = document.createElement("section");
     scoreSection.setAttribute("class", "score-data");
-
 
    }
    else {
@@ -102,7 +104,7 @@ const renderForm = () => {
   submitButton.setAttribute("id", "submit-button")
   submitButton.innerHTML = "submit";
   
-
+  
   inputTitle.append(input);
   inputTitle.append(submitButton);
   form.append(inputTitle);
@@ -110,6 +112,7 @@ const renderForm = () => {
 
   form.addEventListener("click", storeAndShowScore)
 };
+
 var startTimer;
 const renderTimer = () => {
   const timersection = document.createElement("section");
@@ -164,7 +167,7 @@ const chosenAnswer = (event) => {
     clearInterval(startTimer);
     removeTimer();
     removeQuestionSection();
-    renderForm(timeLeft);
+    renderForm();
   }
   else if (
     targetAnswer.tagName === "LI" &&
@@ -183,7 +186,7 @@ const chosenAnswer = (event) => {
     clearInterval(startTimer);
     removeTimer();
     removeQuestionSection();
-    renderForm(timeLeft);
+    renderForm();
   }
 };
 
