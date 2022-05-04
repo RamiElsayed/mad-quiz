@@ -68,11 +68,18 @@ const restartPage = () => {
   restartSection.append(restartOption);
   mainElem.append(restartSection);
 };
+
+const finishQuiz = (event) => {
+  if (event.target === "BUTTON") {
+    location.href = "./index.html";
+  }
+};
 const storeScore = (scoreCard) => {
   localStorage.setItem('highscore', JSON.stringify([]));
 
-  var highScores = localStorage.getItem('highscore');
+  var highScores = JSON.parse(localStorage.getItem("highscore"));
   highScores.push(scoreCard);
+  localStorage.setItem('highscore', JSON.stringify(highScores));
   
 };
 const showScore = (event) => {
@@ -94,11 +101,19 @@ const showScore = (event) => {
     notification.setAttribute("class", "notification");
     notification.textContent =
       "you can see the high scores by clicking on the high score link on the top left of this page";
+    
+    const finishQuizButton = document.createElement("button");
+    finishQuizButton.setAttribute("class", "finish-quiz-button");
+    finishQuizButton.textContent = "Finish";
 
-    scoreCard.append(notification);
     scoreSection.append(scoreCard);
+    scoreSection.append(notification);
+    scoreSection.append(finishQuizButton);
     mainElem.append(scoreSection);
-    storeScore(scoreCard);
+
+    storeScore(scoreCard.textContent);
+    scoreCard.addEventListener("click", finishQuiz);
+
   } else if (formTarget.tagName === "BUTTON" && name.textContent === "") {
     alert("please enter your name");
   }
