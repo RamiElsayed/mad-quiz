@@ -71,7 +71,7 @@ const restartPage = () => {
 
 const finishQuiz = (event) => {
   if (event.target === "BUTTON") {
-    location.href = "./index.html";
+    location.href = "https://ramielsayed.github.io/mad-quiz/";
   }
 };
 
