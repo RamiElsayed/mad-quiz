@@ -58,7 +58,7 @@ const removeTimer = () => {
   const timerSection = document.getElementById("timer");
   timerSection.remove();
 };
-const finishAndRestartQuiz = () => {
+const finishOrRestartQuiz = () => {
   window.location.reload();
 };
 
@@ -79,7 +79,7 @@ const restartPage = () => {
   restartSection.append(restartOption);
   restartSection.append(restartButton);
   mainElem.append(restartSection);
-  restartButton.addEventListener("click", finishAndRestartQuiz)
+  restartButton.addEventListener("click",finishOrRestartQuiz)
 };
 
 
@@ -106,7 +106,7 @@ const saveScoreInLocalStorage = (name, score) => {
       localStorage.setItem("highscores",JSON.stringify(highscores));
     
 }
-const storeAndshowScore = (event) => {
+const storeAndShowScore = (event) => {
   event.preventDefault();
   const name = document.getElementById("form-input").value;
   if (name) {
@@ -135,7 +135,7 @@ const storeAndshowScore = (event) => {
     mainElem.append(scoreSection);
 
     saveScoreInLocalStorage(name, timeLeft);
-    finishAndRestartQuizButton.addEventListener("click", finishAndRestartQuiz)
+    finishAndRestartQuizButton.addEventListener("click",finishOrRestartQuiz)
 
   } else  {
     alert("please enter your name");
@@ -152,6 +152,7 @@ const renderForm = () => {
 
   const input = document.createElement("input");
   input.setAttribute("class", "input-field");
+  input.setAttribute("id", "form-input")
   input.placeholder = "your name";
 
   const submitButton = document.createElement("button");
@@ -163,7 +164,7 @@ const renderForm = () => {
   form.append(inputTitle);
   mainElem.append(form);
 
-  submitButton.addEventListener("click", storeAndshowScore);
+  submitButton.addEventListener("click", storeAndShowScore);
 };
 
 
