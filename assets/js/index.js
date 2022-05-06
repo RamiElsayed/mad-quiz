@@ -62,7 +62,7 @@ const finishOrRestartQuiz = () => {
   window.location.reload();
 };
 
-const restartPage = () => {
+const timeRunout = () => {
   const restartSection = document.createElement("section");
   restartSection.setAttribute("class", "restart-page");
 
@@ -183,7 +183,7 @@ const renderTimer = () => {
       clearInterval(startTimer);
       removeQuestionSection();
       removeTimer();
-      restartPage();
+      timeRunout();
     }
     timeLeft--;
     if (questionIndex > 3) {
