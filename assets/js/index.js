@@ -5,7 +5,7 @@ const bannerElem = document.getElementById("banner-section");
 //target main element
 const mainElem = document.getElementById("main");
 //time left variable to store time and use as score
-let timeLeft = 200;
+let timeLeft = 10;
 var scoresArray = [];
 var startTimer;
 
@@ -58,6 +58,9 @@ const removeTimer = () => {
   const timerSection = document.getElementById("timer");
   timerSection.remove();
 };
+const finishAndRestartQuiz = () => {
+  window.location.reload();
+};
 
 const restartPage = () => {
   const restartSection = document.createElement("section");
@@ -67,14 +70,19 @@ const restartPage = () => {
   restartOption.setAttribute("class", "restart-option");
   restartOption.textContent =
     "you ran out of time, Click restart or the mad genuis quiz title to go back to home page";
+  
+  const restartButton = document.createElement("button");
+  restartButton.setAttribute("class", "restart-button");
+  restartButton.innerHTML = "restart";
 
+  
   restartSection.append(restartOption);
+  restartSection.append(restartButton);
   mainElem.append(restartSection);
+  restartButton.addEventListener("click", finishAndRestartQuiz)
 };
 
-const finishQuiz = () => {
-    window.location.reload();
-};
+
 
 const saveScoreInLocalStorage = (name, score) => {
       let newScore = {
@@ -117,17 +125,17 @@ const storeAndshowScore = (event) => {
     notification.textContent =
       "you can see the high scores by clicking on the high score link on the top left of this page";
     
-    const finishQuizButton = document.createElement("button");
-    finishQuizButton.setAttribute("class", "finish-quiz-button");
-    finishQuizButton.textContent = "Finish";
+    const finishAndRestartQuizButton = document.createElement("button");
+    finishAndRestartQuizButton.setAttribute("class", "finish-quiz-button");
+    finishAndRestartQuizButton.textContent = "Finish";
 
     scoreSection.append(scoreCard);
     scoreSection.append(notification);
-    scoreSection.append(finishQuizButton);
+    scoreSection.append(finishAndRestartQuizButton);
     mainElem.append(scoreSection);
 
     saveScoreInLocalStorage(name, timeLeft);
-    finishQuizButton.addEventListener("click", finishQuiz)
+    finishAndRestartQuizButton.addEventListener("click", finishAndRestartQuiz)
 
   } else  {
     alert("please enter your name");
@@ -144,12 +152,10 @@ const renderForm = () => {
 
   const input = document.createElement("input");
   input.setAttribute("class", "input-field");
-  input.setAttribute("id", "form-input");
   input.placeholder = "your name";
 
   const submitButton = document.createElement("button");
   submitButton.setAttribute("class", "form-button");
-  submitButton.setAttribute("id", "submit-button");
   submitButton.innerHTML = "submit";
 
   inputTitle.append(input);
