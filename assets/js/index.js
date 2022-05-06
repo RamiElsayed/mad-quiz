@@ -5,7 +5,7 @@ const bannerElem = document.getElementById("banner-section");
 //target main element
 const mainElem = document.getElementById("main");
 //time left variable to store time and use as score
-let timeLeft = 20;
+let timeLeft = 200;
 var scoresArray = [];
 var startTimer;
 
@@ -163,7 +163,7 @@ const renderForm = () => {
 
 const renderTimer = () => {
   const timersection = document.createElement("section");
-  timersection.setAttribute("class", "timer-section ");
+  timersection.setAttribute("class", "timer-section");
   timersection.setAttribute("id", "timer");
 
   const timerDiv = document.createElement("div");
