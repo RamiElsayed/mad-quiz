@@ -82,8 +82,8 @@ body {
   align-items: center;
   letter-spacing: 0.3rem;
   text-align: center;
-  margin: 2rem 0rem;
-  width: 50%;
+  width: 60%;
+  padding: 2rem 0;
   color: var(--ash-grey-rgb);
   background-color: var(--main-background-color);
   box-shadow: 2px 2px 2px 2px var(--footer-header-color);
