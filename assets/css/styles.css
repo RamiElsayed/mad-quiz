@@ -76,7 +76,7 @@ body {
   margin: 0 40rem;
   color: var(--ash-grey-rgb);
 }
-.content-section,
+.main-content-section,
 .highscores-title,
 .highScoresSection {
   display: flex;
@@ -298,7 +298,7 @@ body {
   .main {
     margin: 0 0.5rem;
   }
-.content-section,
+.main-content-section,
 .highscores-title,
 .highScoresSection{
   width: 100%;
