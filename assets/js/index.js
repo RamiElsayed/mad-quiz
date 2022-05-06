@@ -89,13 +89,16 @@ const saveScoreInLocalStorage = (name, score) => {
           alert("scores are being reset")
         }
         highscores.push(newScore)
+        highscores.sort((questionA, QuestionB) => {
+          return QuestionB.score - questionA.score
+        })
       }else{
         highscores = [newScore]
       }
       localStorage.setItem("highscores",JSON.stringify(highscores));
     
 }
-const StoreAndshowScore = (event) => {
+const storeAndshowScore = (event) => {
   event.preventDefault();
   const name = document.getElementById("form-input").value;
   if (name) {
@@ -117,9 +120,6 @@ const StoreAndshowScore = (event) => {
     const finishQuizButton = document.createElement("button");
     finishQuizButton.setAttribute("class", "finish-quiz-button");
     finishQuizButton.textContent = "Finish";
-
-    
-    //localStorage.setItem("highscores", JSON.stringify(scoresArray));
 
     scoreSection.append(scoreCard);
     scoreSection.append(notification);
@@ -157,7 +157,7 @@ const renderForm = () => {
   form.append(inputTitle);
   mainElem.append(form);
 
-  submitButton.addEventListener("click", StoreAndshowScore);
+  submitButton.addEventListener("click", storeAndshowScore);
 };
 
 
