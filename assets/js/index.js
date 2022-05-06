@@ -6,6 +6,8 @@ const bannerElem = document.getElementById("banner-section");
 const mainElem = document.getElementById("main");
 //time left variable to store time and use as score
 let timeLeft = 20;
+var scoresArray = [];
+var startTimer;
 
 //question index and questions array
 let questionIndex = 0;
@@ -37,7 +39,8 @@ const questions = [
     choices: ["carl yung", "carl sagan", "alexander fleming", "carl gauss"],
     correctanswer: "alexander fleming",
   },
-];
+].sort(() => Math.random() - 0.5);
+
 const removeSection = () => {
   bannerElem.remove();
 };
@@ -69,17 +72,33 @@ const restartPage = () => {
   mainElem.append(restartSection);
 };
 
-const finishQuiz = (event) => {
-  if (event.target === "BUTTON") {
-    location.href = "https://ramielsayed.github.io/mad-quiz/";
-  }
+const finishQuiz = () => {
+    window.location.reload();
 };
 
-const showScore = (event) => {
+const saveScoreInLocalStorage = (name, score) => {
+      let newScore = {
+        name,
+        score
+      }
+      localStorage.setItem("finalscore",JSON.stringify(newScore));
+      var highscores = JSON.parse(localStorage.getItem("highscores"));
+      if(highscores && highscores.length){
+        if(highscores.length>=100){
+          highscores=[];
+          alert("scores are being reset")
+        }
+        highscores.push(newScore)
+      }else{
+        highscores = [newScore]
+      }
+      localStorage.setItem("highscores",JSON.stringify(highscores));
+    
+}
+const StoreAndshowScore = (event) => {
   event.preventDefault();
-  const formTarget = event.target;
   const name = document.getElementById("form-input").value;
-  if (formTarget.tagName === "BUTTON" && name !== "") {
+  if (name) {
     removeForm();
 
     const scoreSection = document.createElement("section");
@@ -98,18 +117,19 @@ const showScore = (event) => {
     const finishQuizButton = document.createElement("button");
     finishQuizButton.setAttribute("class", "finish-quiz-button");
     finishQuizButton.textContent = "Finish";
-    var scoresArray = [];
-    localStorage.setItem("highscores", JSON.stringify(scoresArray));
+
+    
+    //localStorage.setItem("highscores", JSON.stringify(scoresArray));
 
     scoreSection.append(scoreCard);
     scoreSection.append(notification);
     scoreSection.append(finishQuizButton);
     mainElem.append(scoreSection);
 
-    
-    scoreCard.addEventListener("click", finishQuiz);
+    saveScoreInLocalStorage(name, timeLeft);
+    finishQuizButton.addEventListener("click", finishQuiz)
 
-  } else if (formTarget.tagName === "BUTTON" && name.textContent === "") {
+  } else  {
     alert("please enter your name");
   }
 };
@@ -137,10 +157,10 @@ const renderForm = () => {
   form.append(inputTitle);
   mainElem.append(form);
 
-  form.addEventListener("click", showScore);
+  submitButton.addEventListener("click", StoreAndshowScore);
 };
 
-var startTimer;
+
 const renderTimer = () => {
   const timersection = document.createElement("section");
   timersection.setAttribute("class", "timer-section ");

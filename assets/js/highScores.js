@@ -15,7 +15,7 @@ scoresList.setAttribute("class", "highscores-list");
     const li = document.createElement("li");
     li.setAttribute("class", "score");
     li.setAttribute("id", "score-data");
-    li.textContent = highScoresArray[i];
+    li.textContent = `${highScoresArray[i].name} ${highScoresArray[i].score}`;
     scoresList.append(li);
   }
   section.append(scoresList)
