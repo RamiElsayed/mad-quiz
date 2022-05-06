@@ -252,7 +252,22 @@ body {
   padding: 1rem;
   cursor: pointer;
   letter-spacing: 0.2rem;
-  
+  text-shadow: 0.1rem 0.1rem 0.1rem rgb(0, 0, 0);
+  border-radius: 1rem;
+  background-image: linear-gradient(
+    to top left,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2) 30%,
+    rgba(0, 0, 0, 0)
+  );
+  box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+    inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+.form-button:active,
+.restart-button:active,
+.finish-quiz-button:active {
+  box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
 .highScoresSection {
   display: flex;
