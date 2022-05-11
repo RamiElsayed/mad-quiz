@@ -106,7 +106,7 @@ const saveScoreInLocalStorage = (name, score) => {
       localStorage.setItem("highscores",JSON.stringify(highscores));
     
 }
-const storeAndShowScore = (event) => {
+const showScore = (event) => {
   event.preventDefault();
   const name = document.getElementById("form-input").value;
   if (name) {
@@ -164,7 +164,7 @@ const renderForm = () => {
   form.append(inputTitle);
   mainElem.append(form);
 
-  submitButton.addEventListener("click", storeAndShowScore);
+  submitButton.addEventListener("click", showScore);
 };
 
 
